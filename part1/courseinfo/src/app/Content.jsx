@@ -1,13 +1,13 @@
-const Content = () => (
+const Content = (props) => (
   <>
     <p>
-      {part1} {exercises1}
+      {props.parts[0].name} {props.parts[0].exercises}
     </p>
     <p>
-      {part2} {exercises2}
+      {props.parts[1].name} {props.parts[1].exercises}
     </p>
     <p>
-      {part3} {exercises3}
+      {props.parts[2].name} {props.parts[2].exercises}
     </p>
   </>
 );
