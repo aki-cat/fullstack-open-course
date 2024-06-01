@@ -1,15 +1,11 @@
-const Content = (props) => (
-  <>
-    <p>
-      {props.parts[0].name} {props.parts[0].exercises}
-    </p>
-    <p>
-      {props.parts[1].name} {props.parts[1].exercises}
-    </p>
-    <p>
-      {props.parts[2].name} {props.parts[2].exercises}
-    </p>
-  </>
-);
+import Part from "./Part";
 
-export default Content;
+export default function Content(props) {
+  return (
+    <div>
+      <Part part={props.parts[0]} />
+      <Part part={props.parts[1]} />
+      <Part part={props.parts[2]} />
+    </div>
+  );
+}
