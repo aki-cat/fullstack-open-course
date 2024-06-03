@@ -1,4 +1,13 @@
 export default function Statistics({ good, neutral, bad }) {
+  if (good + neutral + bad === 0) {
+    return (
+      <div>
+        <h2>Statistics</h2>
+        <p>No feedback given.</p>
+      </div>
+    );
+  }
+
   function calculateTotal() {
     return good - bad;
   }
