@@ -31,12 +31,33 @@ const App = () => {
     setScores(newScores);
   }
 
+  function mostVoted() {
+    let mostPopular = -1;
+    for (let index = 0; index < scores.length; index++) {
+      if (mostPopular === -1 || scores[index] > scores[mostPopular]) {
+        mostPopular = index;
+      }
+    }
+    return mostPopular;
+  }
+
   return (
     <div>
-      <p>"{anecdotes[selected]}"</p>
-      <p>&gt; Has {scores[selected]} votes.</p>
-      <button onClick={vote}>vote</button>
-      <button onClick={pickRandomAnecdote}>next anecdote</button>
+      <div>
+        <h1>Anecdote of the day</h1>
+        <p>"{anecdotes[selected]}"</p>
+        <p>&gt; Has {scores[selected]} votes.</p>
+        <div>
+          <button onClick={vote}>vote</button>
+          <button onClick={pickRandomAnecdote}>next anecdote</button>
+        </div>
+      </div>
+
+      <div>
+        <h2>Most voted anecdote</h2>
+        <p>"{anecdotes[mostVoted()]}"</p>
+        <p>&gt; With {scores[mostVoted()]} votes.</p>
+      </div>
     </div>
   );
 };
