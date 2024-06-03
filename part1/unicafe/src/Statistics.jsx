@@ -25,17 +25,16 @@ export default function Statistics({ good, neutral, bad }) {
   return (
     <div>
       <h2>Statistics</h2>
-      <div>
-        <StatisticLine text='Good' value={good} />
-        <StatisticLine text='Neutral' value={neutral} />
-        <StatisticLine text='Bad' value={bad} />
-      </div>
-      ---
-      <div>
-        <StatisticLine text='All' value={calculateTotal()} />
-        <StatisticLine text='Average' value={calculateAverage()} />
-        <StatisticLine text='Positive' value={calculatePositive()} />
-      </div>
+      <table>
+        <tbody>
+          <StatisticLine text='Good' value={good} />
+          <StatisticLine text='Neutral' value={neutral} />
+          <StatisticLine text='Bad' value={bad} />
+          <StatisticLine text='All' value={calculateTotal()} />
+          <StatisticLine text='Average' value={calculateAverage()} />
+          <StatisticLine text='Positive' value={calculatePositive()} />
+        </tbody>
+      </table>
     </div>
   );
 }
