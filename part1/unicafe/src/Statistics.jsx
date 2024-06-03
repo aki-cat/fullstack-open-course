@@ -1,3 +1,5 @@
+import StatisticLine from "./StatisticLine";
+
 export default function Statistics({ good, neutral, bad }) {
   if (good + neutral + bad === 0) {
     return (
@@ -24,15 +26,15 @@ export default function Statistics({ good, neutral, bad }) {
     <div>
       <h2>Statistics</h2>
       <div>
-        <p>Good: {good}</p>
-        <p>Neutral: {neutral}</p>
-        <p>Bad: {bad}</p>
+        <StatisticLine text='Good' value={good} />
+        <StatisticLine text='Neutral' value={neutral} />
+        <StatisticLine text='Bad' value={bad} />
       </div>
       ---
       <div>
-        <p>All: {calculateTotal()}</p>
-        <p>Average: {calculateAverage()}</p>
-        <p>Positive: {calculatePositive()}</p>
+        <StatisticLine text='All' value={calculateTotal()} />
+        <StatisticLine text='Average' value={calculateAverage()} />
+        <StatisticLine text='Positive' value={calculatePositive()} />
       </div>
     </div>
   );
