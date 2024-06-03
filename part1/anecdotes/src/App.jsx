@@ -13,6 +13,7 @@ const App = () => {
   ];
 
   const [selected, setSelected] = useState(0);
+  const [scores, setScores] = useState(new Uint8Array(anecdotes.length));
 
   function randomInt(range) {
     return Math.floor(Math.random() * range);
@@ -24,9 +25,17 @@ const App = () => {
     setSelected(newIndex);
   }
 
+  function vote() {
+    const newScores = [...scores];
+    newScores[selected] += 1;
+    setScores(newScores);
+  }
+
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
+      <p>"{anecdotes[selected]}"</p>
+      <p>&gt; Has {scores[selected]} votes.</p>
+      <button onClick={vote}>vote</button>
       <button onClick={pickRandomAnecdote}>next anecdote</button>
     </div>
   );
