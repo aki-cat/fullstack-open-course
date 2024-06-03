@@ -10,18 +10,20 @@ const App = () => {
   return (
     <div>
       <h1>UniCafé</h1>
-
       <h2>Give feedback</h2>
-
-      <Button text='Good' onClick={() => setGood(good + 1)} />
-      <Button text='Neutral' onClick={() => setNeutral(neutral + 1)} />
-      <Button text='Bad' onClick={() => setBad(bad + 1)} />
+      <div>
+        <Button text='Good' onClick={() => setGood(good + 1)} />
+        <Button text='Neutral' onClick={() => setNeutral(neutral + 1)} />
+        <Button text='Bad' onClick={() => setBad(bad + 1)} />
+      </div>
 
       <h2>Statistics</h2>
 
-      <p>Good: {good}</p>
-      <p>Neutral: {neutral}</p>
-      <p>Bad: {bad}</p>
+      <div>
+        <p>Good: {good}</p>
+        <p>Neutral: {neutral}</p>
+        <p>Bad: {bad}</p>
+      </div>
     </div>
   );
 };
