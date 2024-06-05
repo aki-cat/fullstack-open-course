@@ -1,7 +1,4 @@
-export default function Total(props) {
-  let total = 0;
-  props.parts.forEach((part) => {
-    total += part.exercises;
-  });
-  return <p>Number of exercises {total}</p>;
+export default function Total({ parts }) {
+  const total = parts.reduce((total, part) => total + part.exercises, 0);
+  return <strong>Total of {total} exercises</strong>;
 }
