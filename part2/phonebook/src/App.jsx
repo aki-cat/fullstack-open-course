@@ -13,6 +13,13 @@ const App = () => {
 
   function submitNewName(event) {
     event.preventDefault();
+
+    // Case sensitive
+    if (persons.find(person => person.name === newName)) {
+      alert(`${newName} has already been added to Phonebook.`);
+      return;
+    }
+
     setPersons(persons.concat([{ name: newName }]));
   }
 
