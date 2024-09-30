@@ -1,5 +1,5 @@
-const PhoneNumber = ({ name }) => {
-    return <li>Name: {name}</li>;
+const PhoneNumber = ({ name, number }) => {
+    return <li>{name} {number}</li>;
 }
 
 export default PhoneNumber
