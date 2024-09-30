@@ -5,7 +5,7 @@ const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas' }
   ])
-  const [newName, setNewName] = useState('')
+  const [newName, setNewName] = useState('');
 
   function changeNewName(event) {
     setNewName(event.target.value);
@@ -36,7 +36,7 @@ const App = () => {
         </ul>
       </div>
     </div>
-  )
+  );
 }
 
 export default App
