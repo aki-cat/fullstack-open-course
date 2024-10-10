@@ -2,9 +2,8 @@ import { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
-import axios from 'axios';
+import numbers from './services/numbers';
 
-const RESOURCE_PERSONS_URL = "http://localhost:3001/persons";
 const DEFAULT_NEW_PERSON = {
   name: "",
   number: ""
@@ -14,9 +13,7 @@ const App = () => {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    axios.get(RESOURCE_PERSONS_URL).then((response) => {
-      setPersons(response.data);
-    });
+    numbers.getAll().then((data) => setPersons(data));
   }, []);
 
   const [filter, setFilter] = useState("");
@@ -51,15 +48,14 @@ const App = () => {
     event.preventDefault();
 
     // Case sensitive
-    if (persons.find(person => person.name === newPerson.name)) {
+    if (persons.find(person => person.name.match(new RegExp(`^${newPerson.name.trim()}$`, "i")))) {
       const error = `${newPerson.name} has already been added to Phonebook.`;
       console.error(error);
       alert(error);
       return;
     }
 
-    axios.post(RESOURCE_PERSONS_URL, newPerson)
-      .then(response => response.data)
+    numbers.insert(newPerson)
       .then(insertedPerson => {
         setPersons(persons.concat([insertedPerson]));
         setNewPerson({
