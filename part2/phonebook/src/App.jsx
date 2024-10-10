@@ -48,10 +48,21 @@ const App = () => {
     event.preventDefault();
 
     // Case sensitive
-    if (persons.find(person => person.name.match(new RegExp(`^${newPerson.name.trim()}$`, "i")))) {
-      const error = `${newPerson.name} has already been added to Phonebook.`;
-      console.error(error);
-      alert(error);
+    const existingPerson = persons.find(person => person.name.match(new RegExp(`^${newPerson.name.trim()}$`, "i")));
+    if (existingPerson) {
+      if (window.confirm(`${newPerson.name} has already been added to Phonebook. Replace old number with new one?`)) {
+        numbers.update(existingPerson.id, { ...existingPerson, number: newPerson.number })
+          .then(updatedPerson => {
+            setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person));
+            setNewPerson({
+              ...DEFAULT_NEW_PERSON
+            });
+          })
+          .catch(error => {
+            console.error(error);
+            alert(error);
+          });
+      }
       return;
     }
 
