@@ -10,8 +10,13 @@ function insert(newNumber) {
     return axios.post(`${RESOURCE_BASE_URL}/persons`, newNumber).then(response => response.data);
 }
 
+function remove(id) {
+    return axios.delete(`${RESOURCE_BASE_URL}/persons/${id}`).then(response => response.data);
+}
+
 
 export default {
     getAll,
     insert,
+    remove,
 };

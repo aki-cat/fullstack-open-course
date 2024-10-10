@@ -1,6 +1,19 @@
 import PhoneNumber from './PhoneNumber';
+import numbers from "../services/numbers";
 
-const Persons = ({ persons, filter }) => {
+const Persons = ({ setPersons, persons, filter }) => {
+
+    function onClickRemoveButton(deletedPerson) {
+        if (window.confirm(`Delete ${deletedPerson.name}?`)) {
+            numbers.remove(deletedPerson.id)
+                .then(_ => setPersons(persons.filter(person => person.id !== deletedPerson.id)))
+                .catch(error => {
+                    console.error(error);
+                    alert(error);
+                });
+        }
+    };
+
     return <>
         <h2>Numbers</h2>
         <ul>
@@ -20,7 +33,11 @@ const Persons = ({ persons, filter }) => {
                     )
                     .map(
                         person =>
-                            <PhoneNumber key={person.id} name={person.name} number={person.number} />
+                            <li key={person.id}>
+                                <PhoneNumber name={person.name} number={person.number} />
+                                <button onClick={() => onClickRemoveButton(person)}>Delete</button>
+                            </li>
+
                     )
             }
         </ul>

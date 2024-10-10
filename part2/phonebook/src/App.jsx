@@ -74,7 +74,7 @@ const App = () => {
 
       <Filter filter={filter} setSearchQuery={setSearchQuery} />
       <PersonForm submitNewPerson={submitNewPerson} changeNewName={changeNewName} changeNewNumber={changeNewNumber} newPerson={newPerson} />
-      <Persons persons={persons} filter={filter} />
+      <Persons setPersons={setPersons} persons={persons} filter={filter} />
 
     </div>
   );
