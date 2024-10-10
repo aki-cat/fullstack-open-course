@@ -20,7 +20,7 @@ const Persons = ({ persons, filter }) => {
                     )
                     .map(
                         person =>
-                            <PhoneNumber key={person.name} name={person.name} number={person.number} />
+                            <PhoneNumber key={person.id} name={person.name} number={person.number} />
                     )
             }
         </ul>

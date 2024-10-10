@@ -4,11 +4,17 @@ import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import axios from 'axios';
 
+const RESOURCE_PERSONS_URL = "http://localhost:3001/persons";
+const DEFAULT_NEW_PERSON = {
+  name: "",
+  number: ""
+};
+
 const App = () => {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    axios.get("http://localhost:3001/persons").then((response) => {
+    axios.get(RESOURCE_PERSONS_URL).then((response) => {
       setPersons(response.data);
     });
   }, []);
@@ -16,8 +22,7 @@ const App = () => {
   const [filter, setFilter] = useState("");
 
   const [newPerson, setNewPerson] = useState({
-    name: "",
-    number: ""
+    ...DEFAULT_NEW_PERSON
   });
 
   function setSearchQuery(event) {
@@ -47,11 +52,24 @@ const App = () => {
 
     // Case sensitive
     if (persons.find(person => person.name === newPerson.name)) {
-      alert(`${newPerson.name} has already been added to Phonebook.`);
+      const error = `${newPerson.name} has already been added to Phonebook.`;
+      console.error(error);
+      alert(error);
       return;
     }
 
-    setPersons(persons.concat([newPerson]));
+    axios.post(RESOURCE_PERSONS_URL, newPerson)
+      .then(response => response.data)
+      .then(insertedPerson => {
+        setPersons(persons.concat([insertedPerson]));
+        setNewPerson({
+          ...DEFAULT_NEW_PERSON
+        });
+      })
+      .catch(error => {
+        console.error(error);
+        alert(error);
+      });
   }
 
   return (
