@@ -3,6 +3,7 @@ import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
 import personsdb from './services/personsdb';
+import FeedbackMessage from './components/FeedbackMessage';
 
 const DEFAULT_NEW_PERSON = {
   name: "",
@@ -21,6 +22,21 @@ const App = () => {
   const [newPerson, setNewPerson] = useState({
     ...DEFAULT_NEW_PERSON
   });
+
+  const [message, setMessage] = useState({ success: false, message: "" });
+
+  let timeout = null;
+  function setActionFeedback(success, message) {
+    if (timeout !== null) {
+      clearTimeout(timeout);
+      timeout = null;
+    }
+    setMessage({ success, message });
+    timeout = setTimeout(() => {
+      setMessage({ success: false, message: "" });
+      timeout = null;
+    }, 5000);
+  }
 
   function setSearchQuery(event) {
     setFilter(event.target.value);
@@ -57,10 +73,12 @@ const App = () => {
             setNewPerson({
               ...DEFAULT_NEW_PERSON
             });
+            setActionFeedback(true, `${updatedPerson.name} updated successfully.`);
           })
           .catch(error => {
-            console.error(error);
-            alert(error);
+            // console.error(error);
+            setPersons(persons.filter(person => person.id !== existingPerson.id));
+            setActionFeedback(false, `${existingPerson.name} already removed from server.`);
           });
       }
       return;
@@ -72,10 +90,11 @@ const App = () => {
         setNewPerson({
           ...DEFAULT_NEW_PERSON
         });
+        setActionFeedback(true, `${insertedPerson.name} added successfully.`);
       })
       .catch(error => {
-        console.error(error);
-        alert(error);
+        // console.error(error);
+        setActionFeedback(false, error);
       });
   }
 
@@ -83,9 +102,10 @@ const App = () => {
     <div>
       <h1>Phonebook</h1>
 
+      <FeedbackMessage message={message.message} success={message.success} />
       <Filter filter={filter} setSearchQuery={setSearchQuery} />
       <PersonForm submitNewPerson={submitNewPerson} changeNewName={changeNewName} changeNewNumber={changeNewNumber} newPerson={newPerson} />
-      <Persons setPersons={setPersons} persons={persons} filter={filter} />
+      <Persons setActionFeedback={setActionFeedback} setPersons={setPersons} persons={persons} filter={filter} />
 
     </div>
   );

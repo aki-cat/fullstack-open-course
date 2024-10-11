@@ -1,15 +1,19 @@
 import PhoneNumber from './PhoneNumber';
 import personsdb from "../services/personsdb";
 
-const Persons = ({ setPersons, persons, filter }) => {
+const Persons = ({ setActionFeedback, setPersons, persons, filter }) => {
 
     function onClickRemoveButton(deletedPerson) {
         if (window.confirm(`Delete ${deletedPerson.name}?`)) {
             personsdb.remove(deletedPerson.id)
-                .then(_ => setPersons(persons.filter(person => person.id !== deletedPerson.id)))
+                .then(_ => {
+                    setPersons(persons.filter(person => person.id !== deletedPerson.id));
+                    setActionFeedback(true, `${deletedPerson.name} deleted successfully.`);
+                })
                 .catch(error => {
-                    console.error(error);
-                    alert(error);
+                    // console.error(error);
+                    setPersons(persons.filter(person => person.id !== deletedPerson.id));
+                    setActionFeedback(false, `${deletedPerson.name} was already deleted.`);
                 });
         }
     };
