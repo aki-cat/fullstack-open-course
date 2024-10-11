@@ -1,11 +1,11 @@
 import PhoneNumber from './PhoneNumber';
-import numbers from "../services/numbers";
+import personsdb from "../services/personsdb";
 
 const Persons = ({ setPersons, persons, filter }) => {
 
     function onClickRemoveButton(deletedPerson) {
         if (window.confirm(`Delete ${deletedPerson.name}?`)) {
-            numbers.remove(deletedPerson.id)
+            personsdb.remove(deletedPerson.id)
                 .then(_ => setPersons(persons.filter(person => person.id !== deletedPerson.id)))
                 .catch(error => {
                     console.error(error);

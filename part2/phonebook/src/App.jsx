@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Filter from './components/Filter';
 import PersonForm from './components/PersonForm';
 import Persons from './components/Persons';
-import numbers from './services/numbers';
+import personsdb from './services/personsdb';
 
 const DEFAULT_NEW_PERSON = {
   name: "",
@@ -13,7 +13,7 @@ const App = () => {
   const [persons, setPersons] = useState([]);
 
   useEffect(() => {
-    numbers.getAll().then((data) => setPersons(data));
+    personsdb.getAll().then((data) => setPersons(data));
   }, []);
 
   const [filter, setFilter] = useState("");
@@ -51,7 +51,7 @@ const App = () => {
     const existingPerson = persons.find(person => person.name.match(new RegExp(`^${newPerson.name.trim()}$`, "i")));
     if (existingPerson) {
       if (window.confirm(`${newPerson.name} has already been added to Phonebook. Replace old number with new one?`)) {
-        numbers.update(existingPerson.id, { ...existingPerson, number: newPerson.number })
+        personsdb.update(existingPerson.id, { ...existingPerson, number: newPerson.number })
           .then(updatedPerson => {
             setPersons(persons.map(person => person.id === updatedPerson.id ? updatedPerson : person));
             setNewPerson({
@@ -66,7 +66,7 @@ const App = () => {
       return;
     }
 
-    numbers.insert(newPerson)
+    personsdb.insert(newPerson)
       .then(insertedPerson => {
         setPersons(persons.concat([insertedPerson]));
         setNewPerson({
