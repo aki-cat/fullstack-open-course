@@ -10,6 +10,7 @@ function App() {
   const [countriesData, setCountriesData] = useState([]);
   const [matches, setMatches] = useState([]);
   const [filter, setFilter] = useState("");
+  const [seletedCountry, setSelectedCountry] = useState(null);
 
   useEffect(() => {
     axios.get(`${API_URL}/all`)
@@ -25,6 +26,14 @@ function App() {
       : setMatches(countriesData.filter(countryData => countryData.name.common.match(new RegExp(`${filter}`, "i"))));
   }, [filter]);
 
+  useEffect(() => {
+    if (matches.length === 1) {
+      setSelectedCountry(matches[0]);
+    } else {
+      setSelectedCountry(null);
+    }
+  }, [matches]);
+
   return (
     <>
       <div>
@@ -37,13 +46,13 @@ function App() {
 
         {
           matches.length > 1
-            ? <Matches matches={matches} />
+            ? <Matches matches={matches} setSelectedCountry={setSelectedCountry} seletedCountry={seletedCountry} />
             : <></>
         }
 
         {
-          matches.length === 1
-            ? <CountryInfo countryData={matches[0]} />
+          seletedCountry !== null
+            ? <CountryInfo countryData={seletedCountry} />
             : <></>
         }
       </div>
