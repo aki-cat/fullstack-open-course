@@ -17,6 +17,8 @@ morgan.token("data", (request, _) => {
 });
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :data"));
 
+app.use(express.static("dist"));
+
 app.get("/info", (request, response) => {
     response.send(`
         <div>
