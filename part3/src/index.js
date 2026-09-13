@@ -10,11 +10,17 @@ const app = express();
 app.use(express.json());
 
 morgan.token("data", (request, _) => {
+    if (!request.body) {
+        return "";
+    }
+
     if (request.body.length === 0 || Object.entries(request.body).length === 0) {
         return "";
     }
+
     return JSON.stringify(request.body);
 });
+
 app.use(morgan(":method :url :status :res[content-length] - :response-time ms :data"));
 
 app.use(express.static("dist"));
